@@ -1,17 +1,24 @@
-//requireds
-const fs = require('fs');
+const { argv } = require('./config/yargs')
+const { crearArchivo, listar } = require('./multiplicar/mutiplicar');
 
-// const fs = require('express');
-// const fs = require('./fs');
-let base = 2;
+let comando = argv._[0];
+switch (comando) {
 
-let data = '';
-for (let index = 1; index < 10; index++) {
-    data += (index + '*' + base + '=' + (base * index) + '\n');;
-
+    case 'crear':
+        crearArchivo(argv.base).then(archivo => {
+            console.log(`El archivo creado un archivo con la tabla ${argv.base}`);
+        }).catch(error => {
+            console.log(error);
+        });
+        break;
+    case 'listar':
+        listar(argv.base, argv.limite);
+        break;
+    default:
+        console.log('comando no reconocido;');
 }
-
-fs.writeFile('tabla.txt', data, (error) => {
-    if (error) throw Error;
-    console.log('se creo el archivo');
-})
+// console.log(process.argv);
+let argv2 = process.argv;
+// let parametro = argv[2];
+// let base = parametro.split('=')[1];
+// console.log(argv.limite);

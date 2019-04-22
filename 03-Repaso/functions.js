@@ -5,11 +5,14 @@
 
 // let sumar = (a, b) => a + b;
 
-// function saludar() {
-//     return 'hola mundo';
-// }
+ function saludar() {
+     return 'hola mundo';
+ }
 
-let saludar = () => 'hola mundo';
+let saludar = () => {
+    
+ return   'hola mundo';
+}
 
 // console.log(sumar(10, 20));
 console.log(saludar());
