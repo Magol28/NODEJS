@@ -1,30 +1,25 @@
-const express = require('express')
-const app = express()
 require('./config/config')
+
+const express = require('express')
+const mongoose = require('mongoose');
+
+const app = express()
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
+app.use(bodyParser.urlencoded({ extended: false }))
+    // parse application/json
 app.use(bodyParser.json())
 
-app.get('/usuario/:id', (req, res) => {
-    let id = req.params.id
-    res.send('get user' + id)
-})
+app.use(require('./routes/usuario'))
 
-app.post('/usuario', (req, res) => {
-    console.log(req);
-    let body = req.body;
-    res.status(200).json("todo bien")
-})
-app.put('/usuario', (req, res) => {
-    res.send('put user')
-})
-app.delete('/usuario', (req, res) => {
-    res.send('delete user')
-})
-
+mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (error) => {
+    if (error) {
+        throw new Error;
+    }
+    console.log("base conectada");
+});
+mongoose.set('useCreateIndex', true)
 app.listen(process.env.PORT, () => {
     console.log("servidor activo");
 })
