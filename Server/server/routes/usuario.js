@@ -30,7 +30,7 @@ app.post('/usuario', (req, res) => {
 app.put('/usuario/:id', (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
-    User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (error, userDB) => {
+    User.findOneAndUpdate(id, body, { new: true, runValidators: true }, (error, userDB) => {
         if (error) {
             return res.json(error)
         }
