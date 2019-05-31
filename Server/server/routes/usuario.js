@@ -1,16 +1,20 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const _ = require('underscore');
+// const bcrypt = require('bcrypt');
+// const _ = require('underscore');
 
 const User = require('../models/user')
+    // const { verficatoken } = require('../middlewards/autenticacion')
 const app = express()
 
-app.get('/usuario/:id', (req, res) => {
+
+app.get('/usuario/:id', verficatoken, (req, res) => {
     let id = req.params.id
-    res.send('get user' + id)
+    let userDB = User.findById(id, (error, user) => {
+        res.json(user)
+    });
 })
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', verficatoken, (req, res) => {
     let body = req.body;
     let user = new User({
         nombre: body.nombre,
